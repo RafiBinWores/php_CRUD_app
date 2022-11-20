@@ -5,9 +5,10 @@
         $student_id = $_POST['student_id'];
         $student_name = $_POST['student_name'];
         $student_email = $_POST['student_email'];
+        $phone = $_POST['phone'];
         $gender = $_POST['gender'];
 
-        $sql = "INSERT INTO `studentinfo`(`id`, `student_id`, `student_name`, `student_email`, `gender`) VALUES (NULL,'$student_id','$student_name','$student_email','$gender')";
+        $sql = "INSERT INTO `studentinfo`(`id`, `student_id`, `student_name`, `student_email`, `phone`, `gender`) VALUES (NULL,'$student_id','$student_name','$student_email','$phone','$gender')";
 
         $res = mysqli_query($conn, $sql);
 
@@ -36,8 +37,8 @@
 </head>
 <body>
     <header>
-        <div class="bg-color">
-            <h2 class="text-center text-white py-3">Student Information</h2>
+        <div class="bg-color mb-5 text-center">
+            <a href="index.php" class="text-center text-white py-3 fs-1 text-decoration-none">Student Information</a>
         </div>
     </header>
 
@@ -57,6 +58,10 @@
                     <label for="email" class="form-label">Student Email</label>
                     <input type="email" class="form-control" id="email" name="student_email" required>
                 </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone No</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
                 <div>
                     <label for="gender" class="form-label">Gender</label>
                     <select class="form-select" aria-label="Default select example" name="gender" id="gender" required>
@@ -66,7 +71,7 @@
                         <option value="Others">Others</option>
                       </select>
                 </div>
-                <div class="mt-4">
+                <div class="mt-4 mb-5">
                     <button type="submit" name="submit" class="btn btn-success">Save</button>
                     <a href="index.php" class="btn btn-danger">Cancel</a>
                 </div>

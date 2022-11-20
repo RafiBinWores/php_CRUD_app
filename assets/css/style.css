@@ -1,4 +1,6 @@
-
+a{
+    text-decoration: none;
+}
 .form-area{
     width: 500px;
     flex-direction: column;

@@ -1,3 +1,20 @@
+<?php
+  include("database.php");
+
+  if(isset($_POST['submit'])){
+
+    $sn = 1;
+    $searchkey = $_POST['search'];
+    $sql = "SELECT * FROM `studentinfo` WHERE student_name LIKE '%$searchkey%' OR student_email LIKE '%$searchkey%' OR student_id LIKE '%$searchkey%' OR phone LIKE '%$searchkey%' OR gender LIKE '%$searchkey%'";
+
+    $res = mysqli_query($conn, $sql);
+    
+
+    
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +39,10 @@
         </div>
     </header>
 
+    <div class="container mb-5">
+    <h2>Information on Your Search <span class="text-info">"<?php echo $searchkey; ?>"</span></h2>
+    </div>
+
     <div class="container">
       <?php
       if(isset($_GET['msg'])) {
@@ -33,18 +54,6 @@
       }
       ?>
 
-
-        <div class="d-flex justify-content-between">
-          <div class="add-btn">
-          <a href="add-student.php" class="btn btn-success mb-3">Add Student</a>
-          </div>
-          <div class="search-bar">
-          <form method="post" action="search.php" class="d-flex" role="search">
-            <input class="form-control me-2" type="search" name="search" value="search" placeholder="Search..." aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" name="submit">Search</button>
-          </form>
-          </div>
-        </div>
         <table class="table table-borderless shadow p-3 mb-5 bg-body rounded">
             <thead class="shadow p-3 mb-5 bg-body rounded">  
               <tr>
@@ -58,28 +67,34 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
                 <?php
-                  include("database.php");
-                  $sn = 1;
-                  $sql = "SELECT * FROM `studentinfo`";
-                  $res = mysqli_query($conn, $sql);
-                  while($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                    <tr>
-                      <td><?php echo $sn++; ?></td>
-                      <td><?php echo $row['student_id'] ?></td>
-                      <td><?php echo $row['student_name'] ?></td>
-                      <td><?php echo $row['student_email'] ?></td>
-                      <td><?php echo $row['phone'] ?></td>
-                      <td><?php echo $row['gender'] ?></td>
+                  if(mysqli_num_rows($res) > 0)
+                  {
+                  while($row = mysqli_fetch_array($res))
+                  {
+                ?>
+                <td><?php echo $sn++; ?></td>
+                <td><?php echo $row['student_id'] ?></td>
+                <td><?php echo $row['student_name'] ?></td>
+                <td><?php echo $row['student_email'] ?></td>
+                <td><?php echo $row['phone'] ?></td>
+                <td><?php echo $row['gender'] ?></td>
+
                       
-                      <td>
-                          <a href="edit-student.php?id=<?php echo $row ['id'] ?>" class="link-success"><i class="uil uil-edit fs-5 me-3"></i></a>
-                          <a href="delete-student.php?id=<?php echo $row ['id'] ?>" class="link-danger"><i class="uil uil-trash-alt fs-5"></i></a>
-                      </td>
-                    </tr>
-                    <?php
-                  }
+                <td>
+                  <a href="edit-student.php?id=<?php echo $row ['id'] ?>" class="link-success"><i class="uil uil-edit fs-5 me-3"></i></a>
+                  <a href="delete-student.php?id=<?php echo $row ['id'] ?>" class="link-danger"><i class="uil uil-trash-alt fs-5"></i></a>
+                </td>
+              </tr>
+              <?php
+                }
+                }else{
+                echo '<tr>
+                <td colspan="7" class="text-center py-5"><h2 class="text-danger">No Data Found<h2></td>
+                
+                </tr>';
+                }
                 ?> 
           </table>
     </div>

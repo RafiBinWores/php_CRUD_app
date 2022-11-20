@@ -6,9 +6,10 @@
         $student_id = $_POST['student_id'];
         $student_name = $_POST['student_name'];
         $student_email = $_POST['student_email'];
+        $phone = $_POST['phone'];
         $gender = $_POST['gender'];
 
-        $sql = "UPDATE `studentinfo` SET `student_id`='$student_id',`student_name`='$student_name',`student_email`='$student_email',`gender`='$gender' WHERE id = $id";
+        $sql = "UPDATE `studentinfo` SET `student_id`='$student_id',`student_name`='$student_name',`student_email`='$student_email',`phone`='$phone',`gender`='$gender' WHERE id = $id";
 
         $res = mysqli_query($conn, $sql);
 
@@ -37,10 +38,10 @@
 </head>
 <body>
     <header>
-        <div class="bg-color">
-            <h2 class="text-center text-white py-3">Student Information</h2>
+        <div class="bg-color mb-5 text-center">
+            <a href="index.php" class="text-center text-white py-3 fs-1 text-decoration-none">Student Information</a>
         </div>
-    </header>
+    </header>   
 
     <main>
         <div class="form-area container">
@@ -65,6 +66,10 @@
                     <label for="email" class="form-label">Student Email</label>
                     <input type="email" class="form-control" id="email" name="student_email" value="<?php echo $row['student_email'] ?>" required>
                 </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone No</label>
+                    <input type="phone" class="form-control" id="phone" name="phone" value="<?php echo $row['phone'] ?>" required>
+                </div>
                 <div>
                     <label for="gender" class="form-label">Gender</label>
                     <select class="form-select" aria-label="Default select example" name="gender" id="gender" required>
@@ -74,7 +79,7 @@
                         <option value="Others" <?php echo($row ['gender']=='Others')? "selected":""; ?>>Others</option>
                       </select>
                 </div>
-                <div class="mt-4">
+                <div class="mt-4 mb-5">
                     <button type="submit" name="submit" class="btn btn-success">Update</button>
                     <a href="index.php" class="btn btn-danger">Cancel</a>
                 </div>
